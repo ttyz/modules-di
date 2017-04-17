@@ -1,0 +1,24 @@
+{
+    "name": "ttyz/modules-di",
+    "description": "Simple implementation of modules and DI",
+    "type": "library",
+    "license": "MIT",
+	"autoload" : {
+		"psr-4": {
+			"Module\\": "src"
+		},
+		"files": [
+			"src/functions.php"
+		]
+	},
+    "authors": [
+        {
+            "name": "Evgeny Morozov",
+            "email": "Evgeny.Morozov@t-systems.com"
+        }
+    ],
+    "require": {},
+    "require-dev": {
+        "phpunit/phpunit": "^6.1"
+    }
+}
