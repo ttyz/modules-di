@@ -52,6 +52,20 @@ class ModuleTest extends TestCase {
 		$this->assertEquals([ 'dependency' ], $module->getRequirements());
 	}
 
+	public function testIgnoreVariadic() {
+		$module = new Module(
+			'test',
+			[
+				'init' => function (Module ...$variadic) {
+					return $variadic;
+				},
+			]
+		);
+
+		
+		$this->assertEquals([], $module->getRequirements());
+	}
+
 	public function testDynamicRequire() {
 		$module = new Module(
 			'test',

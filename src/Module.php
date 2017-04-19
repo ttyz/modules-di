@@ -19,12 +19,14 @@ class Module {
 		if (isset($config['init'])) {
 			$this->init = $config['init']->bindTo($this);
 			$ref = new \ReflectionFunction($this->init);
-			$params = array_map(
+			$params = array_filter(array_map(
 				function(\ReflectionParameter $param) {
-					return $param->getName();
+					if (!$param->isVariadic()) {
+						return $param->getName();
+					}
 				},
 				$ref->getParameters()
-			);
+			));
 
 			$this->requirements = $params;
 		}
