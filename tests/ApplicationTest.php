@@ -4,9 +4,16 @@ namespace Module;
 
 use PHPUnit\Framework\TestCase;
 use Prophecy\Argument;
+use Psr\Container\ContainerInterface;
 
 class ApplicationTest extends TestCase
 {
+    public function testContainer()
+    {
+        $app = new Application();
+        $this->assertInstanceOf(ContainerInterface::class, $app);
+    }
+
     public function testInit()
     {
         $foo = $this->prophesize(Module::class);

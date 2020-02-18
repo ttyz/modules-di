@@ -2,7 +2,9 @@
 
 namespace Module;
 
-class Application
+use Psr\Container\ContainerInterface;
+
+class Application implements ContainerInterface
 {
     /** @var Di */
     protected $di;
@@ -18,5 +20,9 @@ class Application
     public function get($id)
     {
         return $this->di->get($id);
+    }
+
+    public function has($id)
+    {
     }
 }
