@@ -24,5 +24,6 @@ class Application implements ContainerInterface
 
     public function has($id)
     {
+        return $this->di->has($id);
     }
 }

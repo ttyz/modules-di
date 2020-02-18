@@ -40,4 +40,21 @@ class ApplicationTest extends TestCase
         $app = new Application($module);
         $this->assertSame('bar', $app->get('foo'));
     }
+
+    public function testHas()
+    {
+        $module = new class implements Module {
+
+            public function init(Di $di): void
+            {
+                $di->set('foo', function () {
+                    return 'bar';
+                });
+            }
+        };
+
+        $app = new Application($module);
+        $this->assertTrue($app->has('foo'));
+        $this->assertFalse($app->has('bar'));
+    }
 }
