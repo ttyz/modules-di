@@ -16,7 +16,10 @@ class LegacyModuleWrapperTest extends TestCase
             }
         ]);
 
-        $app = new Application(new LegacyModuleWrapper($module, $manager));
+        $app = new Application(
+            new LegacyAdapterModule($manager),
+            new LegacyModuleWrapper($module)
+        );
 
         $this->assertSame($module, $app->get('test'));
     }
@@ -30,8 +33,28 @@ class LegacyModuleWrapperTest extends TestCase
             }
         ]);
 
-        $app = new Application(new LegacyModuleWrapper($module, $manager));
+        $app = new Application(
+            new LegacyAdapterModule($manager),
+            new LegacyModuleWrapper($module)
+        );
 
         $this->assertSame('bar', $app->get('test')->foo);
+    }
+
+    public function testCanGetManagerFromDI()
+    {
+        $manager = new ModuleManager();
+        $module = new LegacyModule('test', [
+            'init' => function() {
+                return [ 'foo' => 'bar' ];
+            }
+        ]);
+
+        $app = new Application(
+            new LegacyAdapterModule($manager),
+            new LegacyModuleWrapper($module)
+        );
+
+        $this->assertSame($manager->get('test'), $app->get('test'));
     }
 }

@@ -4,23 +4,22 @@ namespace Module;
 
 class LegacyModuleWrapper implements Module
 {
-    /** @var ModuleManager */
-    protected $manager;
+    /** @var LegacyModule */
+    protected $module;
 
-    /** @var string */
-    protected $name;
-
-    public function __construct(LegacyModule $module, ModuleManager $manager)
+    public function __construct(LegacyModule $module)
     {
-        $this->manager = $manager;
-        $this->manager->register($module);
-        $this->name = $module->getName();
+        $this->module = $module;
     }
 
     public function init(Di $di): void
     {
-        $di->set($this->name, function () {
-            return $this->manager->get($this->name);
+        /** @var ModuleManager $manager */
+        $manager = $di->get('moduleManager');
+        $manager->register($this->module);
+        $name = $this->module->getName();
+        $di->set($name, function () use ($manager, $name) {
+            return $manager->get($name);
         });
     }
 }
