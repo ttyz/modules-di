@@ -19,16 +19,18 @@ $app->get('router')->handle($url);
 
 ```
 
-3. `LegacyModuleWrapper` can help to transition from `LegacyModule`. It takes the old module and the `ModuleManager` instance
+3. `LegacyModuleWrapper` can help to transition from `LegacyModule`. Use the `LegacyAdapterModule` to inject `ModuleManager`
 
 ```php
 
 $module = new LegacyModuleWrapper(
     new LegacyModule(...),
-    $manager
 );
 
-$app = new Application($module);
+$app = new Application(
+    new LegacyAdapterModule($manager),
+    $module
+);
 
 ```
 
